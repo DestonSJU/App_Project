@@ -1,0 +1,19 @@
+{
+  "name": "vanilla-js-todo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "scripts": {
+    "start-backend": "json-server --watch db.json --port 3000"
+  },
+    "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "json-server": "^1.0.0-beta.12"
+  }
+}
