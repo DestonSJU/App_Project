@@ -1,30 +1,14 @@
 {
   "todos": [
     {
-      "id": "2",
-      "task": "Ple",
+      "id": 1,
+      "task": "Learn React",
       "completed": false
     },
     {
-      "task": "Go",
-      "completed": false,
-      "id": "iVk6tZgURpI"
-    },
-    {
-      "id": "PGtQiQ0mf8E",
-      "task": "s",
-      "completed": false
-    },
-    {
-      "task": "bruh3",
-      "completed": false,
-      "id": "EyVnkmTpwc8"
-    },
-    {
-      "id": "VLaRZ5wlv3A",
-      "task": "no",
-      "completed": false
+      "id": 2,
+      "task": "Setup JSON Server",
+      "completed": true
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }
