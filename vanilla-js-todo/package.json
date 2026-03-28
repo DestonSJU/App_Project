@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "scripts": {
-    "start-backend": "json-server --watch db.json --port 3000"
+    "start-backend": "json-server --watch db0.json --port 3000"
   },
     "keywords": [],
   "author": "",

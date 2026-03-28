@@ -1,0 +1,30 @@
+{
+  "todos": [
+    {
+      "id": "2",
+      "task": "Ple",
+      "completed": false
+    },
+    {
+      "task": "Go",
+      "completed": false,
+      "id": "iVk6tZgURpI"
+    },
+    {
+      "id": "PGtQiQ0mf8E",
+      "task": "s",
+      "completed": false
+    },
+    {
+      "task": "bruh3",
+      "completed": false,
+      "id": "EyVnkmTpwc8"
+    },
+    {
+      "id": "VLaRZ5wlv3A",
+      "task": "no",
+      "completed": false
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
