@@ -1,0 +1,23 @@
+{
+  "cart": [
+    {
+      "id": "1",
+      "name": "Apples",
+      "price": 4.99,
+      "quantity": 8
+    },
+    {
+      "id": "2",
+      "name": "Lemons",
+      "price": 9.5,
+      "quantity": 7
+    },
+    {
+      "id": "3",
+      "name": "Grapes",
+      "price": "7",
+      "quantity": 2
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
