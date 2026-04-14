@@ -2,6 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import Card from './Card'
 import SearchBar from "./SearchBar";
+import NavBar from "./NavBar";
+import {useState, useEffect} from "react";
 
 //functional component
 function App( ) {
@@ -16,35 +18,59 @@ function App( ) {
       color: 'black'
     }
   }
-//the data: an array of objects
-  const products = [
-    {
-      id: 1,
-      name: 'Crest extra fluoride',
-      price: 2.99,
-    },
-    {
-      id: 2,
-      name: 'Arm & Hammer',
-      price: 2.50,
-    },
-    {
-      id: 3,
-      name: 'Colgate Fresh',
-      price: 3.50,
+    const [items, setItems] = useState([]);
+    const [cart, setCart] = useState([]);
+    const API_ITEMS_URL = 'http://localhost:5000/items';
+    const API_CART_URL = 'http://localhost:5000/cart';
+    useEffect(() => {
+        fetch(API_ITEMS_URL)
+            .then(res => res.json())
+            .then(data => setItems(data));
+    }, []);
+    useEffect(() => {
+        fetch(API_CART_URL)
+            .then(res => res.json())
+            .then(data => setCart(data));
+    }, []);
+
+    const reloadPage = () => {
+        fetch(API_ITEMS_URL)
+            .then(res => res.json())
+            .then(data => setItems(data));
+        fetch(API_ITEMS_URL)
+            .then(res => res.json())
+            .then(data => setItems(data));
     }
-  ]
+    const addItemToCart = (id, itemId, name, price, quantity) => {
+        fetch(API_CART_URL, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id: id, itemId: itemId, name: name, price: price, quantity: quantity})
+        })
+            .then(res => res.json())
+            .then(newCart => setCart([...cart, newCart]));
+    };
+
+    const deleteItemFromCart = (itemId) => {
+        fetch(`${API_CART_URL}/${itemId}`, {method: 'DELETE'})
+            .then(() => setCart(cart.filter(t => t.itemId !== itemId)));
+    };
+    const findIdInCart = (itemId) => {
+        const cartItem = cart.find(t => t.itemId == itemId)
+        return cartItem ? cartItem.id : null
+    }
+
   return (
 //applying styling
-      <div style={styles.div1}>
+      <div>
         <h1 style={styles.header1}>Welcome to Amazon.com</h1>
-        <SearchBar />
-        <div>
-          {products.map((product) => (
-              <Card key={product.id} name={product.name}
-                    price={product.price}/>
-          ))}
-        </div>
+        <NavBar />
+          <ul>
+              {items.map((product) => (
+                  <Card key={product.id} id = {product.id} itemId={product.itemId} name={product.name}
+                        price={product.price} quantity={product.quantity} reload={reloadPage} addItem={addItemToCart} deleteItem={deleteItemFromCart} findItem={findIdInCart}/>
+              ))}
+          </ul>
       </div>
   )
 }

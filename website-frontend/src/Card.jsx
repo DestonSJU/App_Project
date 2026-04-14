@@ -1,45 +1,57 @@
 import React from 'react';
-import { useState } from 'react'
-function Card( { id, name, price, quantity, reload } ){
+import { useState, useEffect } from 'react'
+
+function Card( { id, itemId, name, price, quantity, reload, addItem, deleteItem, findItem } ){
 //state variables and setters
     const [isAdded, setIsAdded] = useState(false)
     const [isOne, setIsOne] = useState(false)
     const [changeQuantity, setChangeQuantity] = useState(quantity)
-    const API_URL = 'http://localhost:5000/cart';
+    const API_ITEMS_URL = 'http://localhost:5000/items';
+    const API_CART_URL = 'http://localhost:5000/cart';
 
-    const updateQuantity = (id) => {
-        fetch(`${API_URL}/${id}`, {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({id: id, name: name, price: price, quantity: changeQuantity})
-        })
-        reload();
-    }
-    const handleAddToCart = () => {
-        setIsAdded(!isAdded)
-        if (quantity == 1) {
-            setIsOne(true)
-        }
-    }
-    const handleRemoveFromCart = () => {
-        setIsAdded(!isAdded)
-        if (quantity != 1) {
-            setIsOne(false)
-        }
-    }
-    const handleAddOne = () => {
-        setChangeQuantity((changeQuantity) => changeQuantity + 1)
-        if (changeQuantity > 1) {
-            setIsOne(false)
-        }
-        updateQuantity(id)
-    }
-    const handleRemoveOne = () => {
-        setChangeQuantity((changeQuantity) => changeQuantity - 1)
+    useEffect(() => {
         if (changeQuantity == 1) {
             setIsOne(true)
         }
-        updateQuantity(id)
+        else {
+            setIsOne(false)
+        }
+        updateQuantity(itemId, changeQuantity);
+    }, [changeQuantity]);
+
+    const updateQuantity = async (itemId, quantity) => {
+        await fetch(`${API_ITEMS_URL}/${itemId}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id: id, itemId: itemId, name: name, price: price, quantity: quantity})
+        })
+        await fetch(`${API_CART_URL}/${findItem(itemId)}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id: id, itemId: itemId, name: name, price: price, quantity: quantity})
+        })
+        reload();
+    }
+
+    const handleAddToCart = () => {
+        if (quantity == 0) {
+            addItem(id, itemId, name, price, 1);
+        }
+        setIsAdded(true)
+        setChangeQuantity(prev => prev + 1)
+    }
+    const handleRemoveFromCart = () => {
+        setIsAdded(false)
+        setChangeQuantity(prev => prev - 1)
+        deleteItem(itemId)
+    }
+    const handleAddOne = () => {
+        setChangeQuantity(prev => prev + 1)
+
+    }
+    const handleRemoveOne = () => {
+        setChangeQuantity(prev => prev - 1)
+
     }
 
     return (
@@ -49,14 +61,14 @@ function Card( { id, name, price, quantity, reload } ){
             {isAdded ?
                 (isOne ? (
                     <>
-                        <button onClick={handleRemoveFromCart}>DELETE</button>
-                        <p>{quantity}</p>
+                        <button onClick={handleRemoveFromCart}>TRASH CAN</button>
+                        <p>{changeQuantity}</p>
                         <button onClick={handleAddOne}>+</button>
                     </>
                     ) : (
                         <>
                             <button onClick={handleRemoveOne}>-</button>
-                            <p>{quantity}</p>
+                            <p>{changeQuantity}</p>
                             <button onClick={handleAddOne}>+</button>
                         </>
                     )
