@@ -52,7 +52,7 @@ function App( ) {
     };
 
     const deleteItemFromCart = (itemId) => {
-        fetch(`${API_CART_URL}/${itemId}`, {method: 'DELETE'})
+        fetch(`${API_CART_URL}/${findIdInCart(itemId)}`, {method: 'DELETE'})
             .then(() => setCart(cart.filter(t => t.itemId !== itemId)));
     };
     const findIdInCart = (itemId) => {

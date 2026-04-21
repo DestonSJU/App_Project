@@ -1,13 +1,17 @@
 import React from 'react';
 import { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 
-function Card( { id, itemId, name, price, quantity, reload, addItem, deleteItem, findItem } ){
+function Card( { id, itemId, name, price, quantity, displayAdd= false, reload, addItem, deleteItem, findItem } ){
 //state variables and setters
-    const [isAdded, setIsAdded] = useState(false)
+    const [isAdded, setIsAdded] = useState(displayAdd)
     const [isOne, setIsOne] = useState(false)
     const [changeQuantity, setChangeQuantity] = useState(quantity)
     const API_ITEMS_URL = 'http://localhost:5000/items';
     const API_CART_URL = 'http://localhost:5000/cart';
+    Card.propTypes = {
+        displayAdd: PropTypes.bool
+    }
 
     useEffect(() => {
         if (changeQuantity == 1) {
@@ -56,8 +60,8 @@ function Card( { id, itemId, name, price, quantity, reload, addItem, deleteItem,
 
     return (
         <div>
-            <h1>Product Name: {name}</h1>
-            <h3>Price: ${Number(price).toFixed(2)}</h3>
+            <h1>{name}</h1>
+            <h3>${Number(price).toFixed(2)}</h3>
             {isAdded ?
                 (isOne ? (
                     <>

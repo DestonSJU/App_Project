@@ -34,13 +34,12 @@ function ShoppingCart() {
     };*/
 
     const deleteItemFromCart = (itemId) => {
-        fetch(`${API_CART_URL}/${itemId}`, {method: 'DELETE'})
+        fetch(`${API_CART_URL}/${findIdInCart(itemId)}`, {method: 'DELETE'})
             .then(() => setCart(cart.filter(t => t.itemId !== itemId)));
     };
-
     const findIdInCart = (itemId) => {
-        const cartItem = cart.find(cart => cart.itemId == itemId)
-        return cartItem.id
+        const cartItem = cart.find(t => t.itemId == itemId)
+        return cartItem ? cartItem.id : null
     }
 
     return (
@@ -49,7 +48,8 @@ function ShoppingCart() {
             <ul>
                 {cart.map((product) => (
                     <Card key={product.id} id = {product.id} itemId={product.itemId} name={product.name}
-                          price={product.price} quantity={product.quantity} reload={reloadPage} deleteItem={deleteItemFromCart} findItem={findIdInCart} />
+                          price={product.price} quantity={product.quantity} displayAdd={true}
+                          reload={reloadPage} deleteItem={deleteItemFromCart} findItem={findIdInCart} />
                 ))}
             </ul>
         </div>

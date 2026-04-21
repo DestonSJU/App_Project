@@ -5,21 +5,21 @@
       "itemId": "1",
       "name": "Apples",
       "price": 4.99,
-      "quantity": 12
+      "quantity": 0
     },
     {
       "id": "2",
       "itemId": "2",
       "name": "Lemons",
       "price": 9.5,
-      "quantity": 7
+      "quantity": 0
     },
     {
       "id": "3",
       "itemId": "3",
       "name": "Grapes",
       "price": 7,
-      "quantity": 3
+      "quantity": 0
     },
     {
       "id": "4",
@@ -29,28 +29,6 @@
       "quantity": 0
     }
   ],
-  "cart": [
-    {
-      "id": "1",
-      "itemId": "1",
-      "name": "Apples",
-      "price": 4.99,
-      "quantity": 12
-    },
-    {
-      "id": "2",
-      "itemId": "2",
-      "name": "Lemons",
-      "price": 9.5,
-      "quantity": 7
-    },
-    {
-      "id": "3",
-      "itemId": "3",
-      "name": "Grapes",
-      "price": 7,
-      "quantity": 3
-    }
-  ],
+  "cart": [],
   "$schema": "./node_modules/json-server/schema.json"
 }
