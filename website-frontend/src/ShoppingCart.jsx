@@ -4,7 +4,7 @@ import Card from "./Card";
 //import Button from 'react-bootstrap/Button';
 //import Form from 'react-bootstrap/Form';
 
-function ShoppingCart() {
+function ShoppingCart({reload}) {
     const [cart, setCart] = useState([]);
     const API_CART_URL = 'http://localhost:5000/cart';
 
@@ -48,7 +48,7 @@ function ShoppingCart() {
             <ul>
                 {cart.map((product) => (
                     <Card key={product.id} id = {product.id} itemId={product.itemId} name={product.name}
-                          price={product.price} quantity={product.quantity} displayAdd={true}
+                          price={product.price} quantity={product.quantity} image={product.image} displayAdd={true}
                           reload={reloadPage} deleteItem={deleteItemFromCart} findItem={findIdInCart} />
                 ))}
             </ul>
