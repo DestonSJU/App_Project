@@ -10,16 +10,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //functional component
 function App( ) {
 //defining CSS styling in a variable
-  const styles = {
-    div1: {
-      backgroundColor: 'grey',
-      color: 'lightyellow',
-      border: '3px dotted lightblue'
-    },
-    header1: {
-      color: 'black'
-    }
-  }
     const [items, setItems] = useState([]);
     const [cart, setCart] = useState([]);
     const API_ITEMS_URL = 'http://localhost:5000/items';
@@ -35,7 +25,6 @@ function App( ) {
             .then(res => res.json())
             .then (data => setCart(data));
     }, []);
-
     const reloadPage = () => {
         fetch(API_ITEMS_URL)
             .then(res => res.json())
@@ -67,25 +56,30 @@ function App( ) {
 
   return (
 //applying styling
-      <div className="container">
-        <h1 style={styles.header1}>Welcome to Amazon.com</h1>
-        <NavBar />
-          <ul>
-              <div className="row">
+      <div className="container-fluid">
+        <div className="col-md-10">
+            <h1>Welcome to Amazon.com</h1>
+            <NavBar />
+            <ul>
+              <div className="row g-2">
               {items.map((product) => (
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                   <Card key={product.id} id = {product.id} itemId={product.itemId} name={product.name}
                         price={product.price} quantity={product.quantity} image={product.image} reload={reloadPage} addItem={addItemToCart} deleteItem={deleteItemFromCart} findItem={findIdInCart}/>
                   </div>
               ))}
               </div>
-          </ul>
+            </ul>
+        </div>
           {cart.length > 0 ? (
-              <div className="container">
-                <div className="position-fixed top-0 end-0">
-                  <ShoppingCart cart={cart} appReload={reloadPage} deleteItem={deleteItemFromCart} findId={findIdInCart} />
-                </div>
-              </div>
+              <ul>
+              {cart.map((product) => (
+                      <div className="col-md-2">
+                          <Card key={product.id} id = {product.id} itemId={product.itemId} name={product.name}
+                                price={product.price} quantity={product.quantity} image={product.image} reload={reloadPage} addItem={addItemToCart} deleteItem={deleteItemFromCart} findItem={findIdInCart} displayAdd={true}/>
+                      </div>
+                  ))}
+              </ul>
           ) : null}
       </div>
   )

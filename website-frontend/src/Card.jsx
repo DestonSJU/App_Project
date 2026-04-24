@@ -27,40 +27,45 @@ function Card( { id, itemId, name, price, quantity, image, displayAdd= false, re
 
 
     const updateQuantity = async (itemId, quantity) => {
-        await fetch(`${API_ITEMS_URL}/${itemId}`, {
+        await Promise.all([fetch(`${API_ITEMS_URL}/${itemId}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({id: id, itemId: itemId, name: name, price: price, quantity: quantity, image: image})
-        }).then(await reload())
-        await fetch(`${API_CART_URL}/${findItem(itemId)}`, {
+        }),
+        fetch(`${API_CART_URL}/${findItem(itemId)}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({id: id, itemId: itemId, name: name, price: price, quantity: quantity, image: image})
-        }).then(await reload())
+        })])
+        reload()
     }
 
-    const handleAddToCart = async () => {
+    const handleAddToCart = () => {
         if (quantity == 0) {
             addItem(id, itemId, name, price, 1, image);
         }
         setIsAdded(true)
         setChangeQuantity(prev => prev + 1)
+        reload()
 
     }
-    const handleRemoveFromCart = async () => {
+    const handleRemoveFromCart = () => {
         setIsAdded(false)
         setChangeQuantity(prev => prev - 1)
         deleteItem(itemId)
+        reload()
 
     }
-    const handleAddOne = async () => {
+    const handleAddOne = () => {
         setChangeQuantity(prev => prev + 1)
+        reload()
 
 
 
     }
-    const handleRemoveOne = async () => {
+    const handleRemoveOne = () => {
         setChangeQuantity(prev => prev - 1)
+        reload()
     }
 
     return (

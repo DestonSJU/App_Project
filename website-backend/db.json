@@ -5,7 +5,7 @@
       "itemId": "1",
       "name": "Apples",
       "price": 4.99,
-      "quantity": 1,
+      "quantity": 0,
       "image": "/images/png-red-apple-isolated-white-background.jpg"
     },
     {
@@ -33,15 +33,6 @@
       "image": "/images/Oranges.jpg"
     }
   ],
-  "cart": [
-    {
-      "id": "27uhEVOOiSw",
-      "itemId": "1",
-      "name": "Apples",
-      "price": 4.99,
-      "quantity": 1,
-      "image": "/images/png-red-apple-isolated-white-background.jpg"
-    }
-  ],
+  "cart": [],
   "$schema": "./node_modules/json-server/schema.json"
 }

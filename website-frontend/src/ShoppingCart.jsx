@@ -4,24 +4,8 @@ import Card from "./Card";
 //import Button from 'react-bootstrap/Button';
 //import Form from 'react-bootstrap/Form';
 
-function ShoppingCart({reload}) {
-    const [cart, setCart] = useState([]);
+function ShoppingCart({cart, setCart, reload}) {
     const API_CART_URL = 'http://localhost:5000/cart';
-
-    useEffect(() => {
-        fetch(API_CART_URL)
-            .then(res => res.json())
-            .then(data => setCart(data));
-    }, []);
-
-    const reloadPage = () => {
-        fetch(API_CART_URL)
-            .then(res => res.json())
-            .then(data => setCart(data));
-        fetch(API_CART_URL)
-            .then(res => res.json())
-            .then(data => setCart(data));
-    }
 
     /*const addItemToCart = (id) => {
         fetch(API_CART_URL, {
@@ -43,13 +27,15 @@ function ShoppingCart({reload}) {
     }
 
     return (
-        <div>
-            <h1>Cart</h1>
-            <ul>
+        <div className="container-fluid">
+            <h1 class="text-center">Cart</h1>
+            <ul className="row g-2">
                 {cart.map((product) => (
-                    <Card key={product.id} id = {product.id} itemId={product.itemId} name={product.name}
-                          price={product.price} quantity={product.quantity} image={product.image} displayAdd={true}
-                          reload={reloadPage} deleteItem={deleteItemFromCart} findItem={findIdInCart} />
+                    <div className="card">
+                        <Card key={product.id} id = {product.id} itemId={product.itemId} name={product.name}
+                              price={product.price} quantity={product.quantity} image={product.image} displayAdd={true}
+                              reload={reload} deleteItem={deleteItemFromCart} findItem={findIdInCart} />
+                    </div>
                 ))}
             </ul>
         </div>
