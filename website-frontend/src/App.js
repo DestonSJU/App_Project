@@ -6,10 +6,11 @@ import NavBar from "./NavBar";
 import ShoppingCart from "./ShoppingCart";
 import {useState, useEffect} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from "react-bootstrap/Button";
 
 //functional component
 function App( ) {
-//defining CSS styling in a variable
+
     const [items, setItems] = useState([]);
     const [cart, setCart] = useState([]);
     const API_ITEMS_URL = 'http://localhost:5000/items';
@@ -55,32 +56,42 @@ function App( ) {
     }
 
   return (
-//applying styling
       <div className="container-fluid">
-        <div className="col-md-10">
-            <h1>Welcome to Amazon.com</h1>
-            <NavBar />
-            <ul>
-              <div className="row g-2">
-              {items.map((product) => (
-                  <div className="col-md-3">
-                  <Card key={product.id} id = {product.id} itemId={product.itemId} name={product.name}
-                        price={product.price} quantity={product.quantity} image={product.image} reload={reloadPage} addItem={addItemToCart} deleteItem={deleteItemFromCart} findItem={findIdInCart}/>
-                  </div>
-              ))}
-              </div>
-            </ul>
-        </div>
-          {cart.length > 0 ? (
-              <ul>
-              {cart.map((product) => (
-                      <div className="col-md-2">
-                          <Card key={product.id} id = {product.id} itemId={product.itemId} name={product.name}
-                                price={product.price} quantity={product.quantity} image={product.image} reload={reloadPage} addItem={addItemToCart} deleteItem={deleteItemFromCart} findItem={findIdInCart} displayAdd={true}/>
+          <div className="row">
+            <div className="col-md-10 p-0">
+                <div className="d-flex align-items-center" style={{backgroundColor: "#232f3e"}}>
+                    <h1 className="website-title mb-0">Welcome to Amazon</h1>
+                    <div className="mx-auto">
+                        <SearchBar />
+                    </div>
+                    <Button className="btn-cart bg-transparent border-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                             className="bi bi-cart" viewBox="0 0 16 16">
+                            <path
+                                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                        </svg> Cart
+                    </Button>
+                </div>
+                <NavBar/>
+                <ul>
+                    <div className="row g-2">
+                        {items.map((product) => (
+                            <div className="col-md-3">
+                                <Card key={product.id} id={product.id} itemId={product.itemId} name={product.name}
+                                      price={product.price} quantity={product.quantity} image={product.image}
+                                      reload={reloadPage} addItem={addItemToCart} deleteItem={deleteItemFromCart} findItem={findIdInCart}/>
                       </div>
                   ))}
-              </ul>
-          ) : null}
+                  </div>
+                </ul>
+            </div>
+              {cart.length > 0 ? (
+                  <div className="col-md-2 p-0">
+                      <ShoppingCart cart={cart} setCart={setCart} reload={reloadPage} deleteItem={deleteItemFromCart} findId={findIdInCart} />
+                  </div>
+
+              ) : null}
+          </div>
       </div>
   )
 }

@@ -31,7 +31,7 @@ function ShoppingCart({cart, setCart, reload}) {
             <h1 class="text-center">Cart</h1>
             <ul className="row g-2">
                 {cart.map((product) => (
-                    <div className="card">
+                    <div className="p-0 border-0 bg-transparent">
                         <Card key={product.id} id = {product.id} itemId={product.itemId} name={product.name}
                               price={product.price} quantity={product.quantity} image={product.image} displayAdd={true}
                               reload={reload} deleteItem={deleteItemFromCart} findItem={findIdInCart} />
