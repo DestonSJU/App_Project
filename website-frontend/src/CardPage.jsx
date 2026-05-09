@@ -17,19 +17,19 @@ function CardPage({items, reload, addItem, deleteItem, findItem}) {
         await Promise.all([fetch(`${API_ITEMS_URL}/${itemId}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({id: product.id, itemId: product.itemId, name: product.name, price: product.price, quantity: quantity, image: product.image})
+            body: JSON.stringify({id: product.id, itemId: product.itemId, name: product.name, price: product.price, quantity: quantity, image: product.image, description: product.description})
         }),
             fetch(`${API_CART_URL}/${findItem(itemId)}`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({id: product.id, itemId: product.itemId, name: product.name, price: product.price, quantity: quantity, image: product.image})
+                body: JSON.stringify({id: product.id, itemId: product.itemId, name: product.name, price: product.price, quantity: quantity, image: product.image, description: product.description})
             })])
         reload()
     }
 
     const handleAddToCart = async () => {
         if (product.quantity == 0) {
-            await addItem(product.id, product.itemId, product.name, product.price, 1, product.image);
+            await addItem(product.id, product.itemId, product.name, product.price, 1, product.image, product.description);
         }
         updateQuantity(product.itemId, product.quantity + 1);
     }
@@ -61,7 +61,7 @@ function CardPage({items, reload, addItem, deleteItem, findItem}) {
                     </div>
                     <div className="row" style={{paddingTop: "50px"}}>
                         <h1>About This Item:</h1>
-                        <h3>More details will be listed soon</h3>
+                        <p style={{fontSize: "35px", whiteSpace: "pre-line"}}>{product.description}</p>
                     </div>
                 </div>
                 <div className="col-2">

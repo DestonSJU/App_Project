@@ -21,6 +21,7 @@ function App( ) {
     const location = useLocation();
     const [searchParams] = useSearchParams();
     const searchText = searchParams.get("search") || "";
+    let totalQuantity = 0
 
     useEffect(() => {
         fetch(API_ITEMS_URL)
@@ -42,11 +43,11 @@ function App( ) {
             .then(data => setCart([...data]))
 
     }
-    const addItemToCart = (id, itemId, name, price, quantity, image) => {
+    const addItemToCart = (id, itemId, name, price, quantity, image, description) => {
         fetch(API_CART_URL, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({id: id, itemId: itemId, name: name, price: price, quantity: quantity, image: image})
+            body: JSON.stringify({id: id, itemId: itemId, name: name, price: price, quantity: quantity, image: image, description: description})
         })
             .then(res => res.json())
             .then(newCart => setCart([...cart, newCart]));
@@ -62,6 +63,9 @@ function App( ) {
     }
 
     const searchedItems = items.filter(item => item.name.toLowerCase().includes(searchText.toLowerCase()));
+    for (let i = 0; i < cart.length; i++) {
+        totalQuantity = totalQuantity + cart[i].quantity;
+    }
 
   return (
       <div className="container-fluid">
@@ -73,13 +77,16 @@ function App( ) {
                           <SearchBar/>
                       </div>
                       <Link to="/cart">
-                          <Button className="btn-cart bg-transparent border-0">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                                   className="bi bi-cart" viewBox="0 0 16 16">
-                                  <path
-                                      d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                              </svg> Cart
-                          </Button>
+                          <div style={{position:"relative", display: "inline-block", paddingTop: "10px"}}>
+                              <span style={{position: "absolute", color: "#FF9900", fontWeight: "bold", top: "0px",  right:"61px"}}>{totalQuantity}</span>
+                              <Button className="btn-cart bg-transparent border-0">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                       className="bi bi-cart" viewBox="0 0 16 16">
+                                      <path
+                                          d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                                  </svg> Cart
+                              </Button>
+                          </div>
                       </Link>
                   </div>
 
@@ -114,7 +121,7 @@ function App( ) {
                                          {items.map((product) => (
                                              <div className="col-md-3" key={product.id}>
                                                  <Card id={product.id} itemId={product.itemId} name={product.name}
-                                                       price={product.price} quantity={product.quantity} image={product.image}
+                                                       price={product.price} quantity={product.quantity} image={product.image} description={product.description}
                                                        reload={reloadPage} addItem={addItemToCart} deleteItem={deleteItemFromCart} findItem={findIdInCart}/>
                                              </div>
                                          ))}
@@ -128,7 +135,7 @@ function App( ) {
                                          {searchedItems.map((product) => (
                                              <div className="col-md-3" key={product.id}>
                                                  <Card id={product.id} itemId={product.itemId} name={product.name}
-                                                       price={product.price} quantity={product.quantity} image={product.image}
+                                                       price={product.price} quantity={product.quantity} image={product.image} description={product.description}
                                                        reload={reloadPage} addItem={addItemToCart} deleteItem={deleteItemFromCart} findItem={findIdInCart}/>
                                              </div>
                                          ))}
@@ -138,9 +145,9 @@ function App( ) {
 
                       <Route path="/cart"
                              element={
-                                <div style={{backgroundColor: "#EAEDED", minHeight: "100vh"}}>
+                                <div style={{backgroundColor: "#EAEDED", minHeight: "100vh", paddingTop: "100px"}}>
                                     <div className="container" style={{backgroundColor: "white"}}>
-                                        <ShoppingCart cart={cart} setCart={setCart} reload={reloadPage} deleteItem={deleteItemFromCart} findId={findIdInCart} sideDisplay={true} />
+                                        <ShoppingCart cart={cart} setCart={setCart} reload={reloadPage} deleteItem={deleteItemFromCart} findId={findIdInCart} sideDisplay={true} cartPage={true} />
                                     </div>
                                 </div>
                              }/>
