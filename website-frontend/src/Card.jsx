@@ -1,14 +1,18 @@
 import React from 'react';
-import { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
 
-function Card( { id, itemId, name, price, quantity, image, displayAdd= false, reload, addItem, deleteItem, findItem}){
+function Card( { id, itemId, name, price, quantity, image, displayAdd= false, sideDisplay = false, reload, addItem, deleteItem, findItem}){
     const API_ITEMS_URL = 'http://localhost:5000/items';
     const API_CART_URL = 'http://localhost:5000/cart';
+    const navigate = useNavigate();
+
     Card.propTypes = {
-        displayAdd: PropTypes.bool
+        displayAdd: PropTypes.bool,
+        sideDisplay: PropTypes.bool
     }
 
     const updateQuantity = async (itemId, quantity) => {
@@ -41,15 +45,18 @@ function Card( { id, itemId, name, price, quantity, image, displayAdd= false, re
     const handleRemoveOne = () => {
         updateQuantity(itemId, quantity - 1);
     }
+    const handleCardPage = () => {
+        navigate(`/item/${id}`);
+    }
 
     return (
-        <div className="text-center border-0">
-            <img src={image} alt={name} style={{ width: "200px" }} />
-            <h1>{name}</h1>
+        <div className={sideDisplay ? "border p-3 h-100 d-flex flex-column align-items-center" : "border p-3 h-100 d-flex flex-column"}>
+            <img src={image} alt={name} onClick={handleCardPage} style={{maxWidth: "100%", maxHeight: "200px", objectFit:"contain", cursor: "pointer"}} />
+            <h1 onClick={handleCardPage} style={{cursor: "pointer"}}>{name}</h1>
             <h3>${Number(price).toFixed(2)}</h3>
             {quantity != 0 ?
                 (quantity == 1 ? (
-                    <div className="btn-group border border-warning" role="group" aria-label="Cart Control">
+                    <div className={sideDisplay ? "btn-group border border-warning align-self-center" : "btn-group border border-warning align-self-start"} role="group" aria-label="Cart Control">
                         <Button className="btn-card bg-transparent" variant="light" onClick={handleRemoveFromCart}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  className="bi bi-trash" viewBox="0 0 16 16">
@@ -59,17 +66,17 @@ function Card( { id, itemId, name, price, quantity, image, displayAdd= false, re
                                     d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
                             </svg>
                         </Button>
-                        <span className="px-4 align-content-center">{quantity}</span>
+                        <span className="px-3 align-content-center">{quantity}</span>
                         <Button className="btn-card bg-transparent" variant="light" onClick={handleAddOne}>+</Button>
                     </div>
                     ) : (
-                        <div className="btn-group border border-warning" role="group" aria-label="Cart Control">
+                        <div className={sideDisplay ? "btn-group border border-warning align-self-center" : "btn-group border border-warning align-self-start"} role="group" aria-label="Cart Control">
                             <Button className="btn-card bg-transparent" variant="light" onClick={handleRemoveOne}>-</Button>
-                            <span className="px-4 align-content-center">{quantity}</span>
+                            <span className="px-3 align-content-center">{quantity}</span>
                             <Button className="btn-card bg-transparent" variant="light" onClick={handleAddOne}>+</Button>
                         </div>
                     )
-                ) : (<Button className="add" variant="warning" onClick={handleAddToCart}>Add to cart</Button>)}
+                ) : (<Button className="add align-self-start" variant="warning" onClick={handleAddToCart}>Add to cart</Button>)}
         </div>
     )
 }

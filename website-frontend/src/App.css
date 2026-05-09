@@ -17,11 +17,18 @@
     color: white;
 }
 .input-search {
-    width: 1000px;
+    width: 1500px;
     height: 40px;
 }
 .btn-cart {
     width: 100px;
     height: 40px;
     font-size: 20px
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1);
+}
+.subtotal {
+    color: #B12704
 }

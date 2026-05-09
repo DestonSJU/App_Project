@@ -1,11 +1,25 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from "react-bootstrap/Button";
-function SearchBar({search}){
+import {useNavigate, useSearchParams} from "react-router-dom";
+
+
+function SearchBar(){
+    const[searchParams] = useSearchParams();
+    const [search, setSearch] = useState(searchParams.get("search")) || "";
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setSearch(searchParams.get("search") || "");
+    },[searchParams])
+    const handleSearchPage = async () => {
+        navigate("/results?search=" + search);
+    }
     return (
-        <div className=" d-flex align-items-center justify-content-center">
-            <input id="search" className="input-search" onChange={search}/>
-            <Button variant="warning">
+        <div className=" d-flex align-items-center">
+            <input id="search box" value={search} onChange={(e) => setSearch(e.target.value)} className="form-control w-100" style={{maxWidth: "1750px", marginLeft: "180px"}}/>
+            <Button variant="warning" onClick={handleSearchPage}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                      className="bi bi-search" viewBox="0 0 16 16">
                     <path

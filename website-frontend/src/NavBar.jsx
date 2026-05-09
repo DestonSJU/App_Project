@@ -1,5 +1,6 @@
 import React from 'react';
-import SearchBar from "./SearchBar";
+import {useNavigate} from 'react-router-dom';
+
 function NavBar(search) {
     const styles = {
         div1: {
@@ -11,13 +12,26 @@ function NavBar(search) {
             border: 'none',
         }
     }
+    const navigate = useNavigate();
+    const handleHomePage = () => {
+        navigate("/");
+    }
+    const handleAboutPage = () => {
+        navigate("/about");
+    }
+    const handleAllPage = () => {
+        navigate("/all");
+    }
+    const handleHelpPage = () => {
+        navigate("/help");
+    }
+
     return (
         <div style={styles.div1} >
-            <button style={styles.button1}>Home</button>
-            <button style={styles.button1}>About</button>
-            <button style={styles.button1}>Deals</button>
-            <button style={styles.button1}>Best Sellers</button>
-            <button style={styles.button1}>Help</button>
+            <button onClick={handleHomePage} style={{...styles.button1, marginLeft:"20px"}}>Home</button>
+            <button onClick={handleAboutPage} style={styles.button1}>About</button>
+            <button onClick={handleAllPage} style={styles.button1}>All Items</button>
+            <button onClick={handleHelpPage} style={styles.button1}>Help</button>
         </div>
     )
 }
