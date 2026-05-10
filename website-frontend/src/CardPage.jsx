@@ -1,18 +1,21 @@
+// Initial Imports
 import React from 'react';
 import {useParams} from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
 
 function CardPage({items, reload, addItem, deleteItem, findItem}) {
+    // Initialize Variables
     const API_ITEMS_URL = 'http://localhost:5000/items';
     const API_CART_URL = 'http://localhost:5000/cart';
-
-
     const {id} = useParams();
+    // Uses item id to find corresponding item in database
     const product = items.find((item) => item.id == id);
+    // Prevents crashes if product isn't found yet
     if (!product) {
         return (<h1 className="text-center"> Loading...</h1>)
     }
 
+    // Put function that updates the item in items and the cart with the changed quantity and reloads the page
     const updateQuantity = async (itemId, quantity) => {
         await Promise.all([fetch(`${API_ITEMS_URL}/${itemId}`, {
             method: 'PUT',
@@ -27,16 +30,19 @@ function CardPage({items, reload, addItem, deleteItem, findItem}) {
         reload()
     }
 
+    // Adds item to cart and updates quantity in items
     const handleAddToCart = async () => {
         if (product.quantity == 0) {
             await addItem(product.id, product.itemId, product.name, product.price, 1, product.image, product.description);
         }
         updateQuantity(product.itemId, product.quantity + 1);
     }
+    // Removes item from cart and updates quantity in items
     const handleRemoveFromCart = async () => {
         updateQuantity(product.itemId, product.quantity - 1);
         deleteItem(product.itemId)
     }
+    // These functions update quantity up or down in items and cart
     const handleAddOne = () => {
         updateQuantity(product.itemId, product.quantity + 1);
     }
@@ -47,12 +53,12 @@ function CardPage({items, reload, addItem, deleteItem, findItem}) {
     return (
         <div className="container-fluid">
             <div className="row">
-                <div className="col-4 offset-md-1">
+                <div className="col-md-4 offset-md-1">
                     <div className="d-flex justify-content-center align-items-center" style={{height:"800px", paddingTop:"100px"}} >
                         <img src={product.image} alt={product.name} style={{width: "100%", height: "100%", objectFit:"contain"}} />
                     </div>
                 </div>
-                <div className="col-4">
+                <div className="col-md-3">
                     <div className="row" style={{paddingTop: "200px", borderBottom: "2px solid #EAEDED"}}>
                         <h1>{product.name}</h1>
                     </div>
@@ -64,7 +70,7 @@ function CardPage({items, reload, addItem, deleteItem, findItem}) {
                         <p style={{fontSize: "35px", whiteSpace: "pre-line"}}>{product.description}</p>
                     </div>
                 </div>
-                <div className="col-2">
+                <div className="col-md-2">
                     <div className="row" style={{paddingTop: "300px"}}>
                         <h1>${Number(product.price).toFixed(2)}</h1>
                     </div>

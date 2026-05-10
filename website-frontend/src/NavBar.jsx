@@ -1,7 +1,9 @@
+// Initial Imports
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 
-function NavBar(search) {
+function NavBar() {
+    // Styling for the buttons
     const styles = {
         div1: {
             backgroundColor: '#232f3e',
@@ -12,6 +14,8 @@ function NavBar(search) {
             border: 'none',
         }
     }
+
+    // Routing for all of the buttons
     const navigate = useNavigate();
     const handleHomePage = () => {
         navigate("/");

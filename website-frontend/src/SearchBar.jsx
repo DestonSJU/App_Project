@@ -1,21 +1,25 @@
+// Initial Imports
 import React from 'react';
 import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from "react-bootstrap/Button";
 import {useNavigate, useSearchParams} from "react-router-dom";
 
-
 function SearchBar(){
+    // Initialize Variables
     const[searchParams] = useSearchParams();
     const [search, setSearch] = useState(searchParams.get("search")) || "";
     const navigate = useNavigate();
 
+    // Sets the search parameter to the search field
     useEffect(() => {
         setSearch(searchParams.get("search") || "");
     },[searchParams])
+    // Routes to the results page with the text entered in the search field
     const handleSearchPage = async () => {
         navigate("/results?search=" + search);
     }
+
     return (
         <div className=" d-flex align-items-center">
             <input id="search box" value={search} onChange={(e) => setSearch(e.target.value)} className="form-control w-100" style={{maxWidth: "1750px", marginLeft: "180px"}}/>
@@ -29,5 +33,4 @@ function SearchBar(){
         </div>
     )
 }
-
 export default SearchBar

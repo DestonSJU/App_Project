@@ -1,3 +1,4 @@
+// Initial Imports
 import logo from './logo.svg';
 import './App.css';
 import Card from './Card'
@@ -11,9 +12,9 @@ import Button from "react-bootstrap/Button";
 import {Routes, Route, Link, useLocation, useSearchParams} from "react-router-dom"
 import Carousel from "react-bootstrap/Carousel"
 
-//functional component
 function App( ) {
 
+    // Initialize variables
     const [items, setItems] = useState([]);
     const [cart, setCart] = useState([]);
     const API_ITEMS_URL = 'http://localhost:5000/items';
@@ -23,6 +24,7 @@ function App( ) {
     const searchText = searchParams.get("search") || "";
     let totalQuantity = 0
 
+    // Get method that loads Items and Cart from database
     useEffect(() => {
         fetch(API_ITEMS_URL)
             .then(res => res.json())
@@ -33,6 +35,8 @@ function App( ) {
             .then(res => res.json())
             .then (data => setCart(data));
     }, []);
+
+    // Get function that reloads Items and Cart to show changes
     const reloadPage = () => {
         fetch(API_ITEMS_URL)
             .then(res => res.json())
@@ -43,6 +47,8 @@ function App( ) {
             .then(data => setCart([...data]))
 
     }
+
+    // Post function that adds item to cart
     const addItemToCart = (id, itemId, name, price, quantity, image, description) => {
         fetch(API_CART_URL, {
             method: 'POST',
@@ -53,24 +59,30 @@ function App( ) {
             .then(newCart => setCart([...cart, newCart]));
     };
 
+    // Delete function that deletes the designated item from the cart
     const deleteItemFromCart = (itemId) => {
         fetch(`${API_CART_URL}/${findIdInCart(itemId)}`, {method: 'DELETE'})
             .then(() => setCart(cart.filter(t => t.itemId !== itemId)));
     };
+
+    // Takes an itemId and finds the corresponding item in the cart
     const findIdInCart = (itemId) => {
         const cartItem = cart.find(t => t.itemId == itemId)
         return cartItem ? cartItem.id : null
     }
 
+    // Stores items that match the search input
     const searchedItems = items.filter(item => item.name.toLowerCase().includes(searchText.toLowerCase()));
+    // Calculates quantity for cart icon
     for (let i = 0; i < cart.length; i++) {
         totalQuantity = totalQuantity + cart[i].quantity;
     }
 
+    // Contains the routing for the app
   return (
       <div className="container-fluid">
           <div className="row">
-              <div className={cart.length > 0 && (location.pathname == "/all" || location.pathname.includes("/result")) ? "col-md-10 p-0" : "col-md-12 p-0"}>
+              <div className={cart.length > 0 && (location.pathname == "/all" || location.pathname.includes("/result") || location.pathname.includes("/item")) ? "col-md-11 p-0" : "col-md-12 p-0"}>
                   <div className="d-flex" style={{backgroundColor: "#232f3e"}}>
                       <h1 className="website-title mb-0" style={{marginLeft: "20px"}}>Amazon</h1>
                       <div className="flex-grow-1 px-3">
@@ -116,31 +128,28 @@ function App( ) {
                              }/>
                       <Route path="/all"
                              element={
-                                 <ul>
-                                     <div className="row g-2">
-                                         {items.map((product) => (
-                                             <div className="col-md-3" key={product.id}>
-                                                 <Card id={product.id} itemId={product.itemId} name={product.name}
-                                                       price={product.price} quantity={product.quantity} image={product.image} description={product.description}
-                                                       reload={reloadPage} addItem={addItemToCart} deleteItem={deleteItemFromCart} findItem={findIdInCart}/>
-                                             </div>
-                                         ))}
-                                     </div>
-                                 </ul>
+                                 <div className="row g-2" style={{paddingTop: "30px", marginLeft:"150px", marginRight:"150px"}}>
+                                     {items.map((product) => (
+                                         <div className="col-md-3" key={product.id}>
+                                             <Card id={product.id} itemId={product.itemId} name={product.name}
+                                                   price={product.price} quantity={product.quantity} image={product.image} description={product.description}
+                                                   reload={reloadPage} addItem={addItemToCart} deleteItem={deleteItemFromCart} findItem={findIdInCart}/>
+                                         </div>
+                                     ))}
+                                 </div>
                              }/>
                       <Route path="/results"
                              element={
-                                 <ul>
-                                     <div className="row g-2">
-                                         {searchedItems.map((product) => (
+                                 <div className="row g-2" style={{paddingTop: "30px", marginLeft:"150px", marginRight:"150px"}}>
+                                     {searchedItems.length == 0 ? (<h1 style={{paddingTop: "10px"}}>No Items Found! Please Try Again!</h1>) :
+                                         searchedItems.map((product) => (
                                              <div className="col-md-3" key={product.id}>
                                                  <Card id={product.id} itemId={product.itemId} name={product.name}
                                                        price={product.price} quantity={product.quantity} image={product.image} description={product.description}
                                                        reload={reloadPage} addItem={addItemToCart} deleteItem={deleteItemFromCart} findItem={findIdInCart}/>
                                              </div>
                                          ))}
-                                     </div>
-                                 </ul>
+                                 </div>
                              }/>
 
                       <Route path="/cart"
@@ -151,8 +160,11 @@ function App( ) {
                                     </div>
                                 </div>
                              }/>
-                      <Route path="/item/:id" element={<CardPage items={items} reload={reloadPage} addItem={addItemToCart} deleteItem={deleteItemFromCart} findItem={findIdInCart} />}/>
-
+                      <Route path="/item/:id"
+                             element={
+                                 <div className="mx-auto" style={{width: "2800px"}}>
+                                     <CardPage items={items} reload={reloadPage} addItem={addItemToCart} deleteItem={deleteItemFromCart} findItem={findIdInCart} />
+                                 </div>}/>
                       <Route path="/about"
                              element={
                                 <div className="text-center">
@@ -177,8 +189,8 @@ function App( ) {
                   </Routes>
 
               </div>
-              {cart.length > 0 && (location.pathname == "/all" || location.pathname.includes("/result")) ? (
-                  <div className="col-md-2 p-0">
+              {cart.length > 0 && (location.pathname == "/all" || location.pathname.includes("/result") || location.pathname.includes("/item")) ? (
+                  <div className="col-md-1">
                       <ShoppingCart cart={cart} setCart={setCart} reload={reloadPage} deleteItem={deleteItemFromCart} findId={findIdInCart} sideDisplay={true} />
                   </div>
               ) : null}

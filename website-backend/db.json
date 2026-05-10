@@ -13,7 +13,7 @@
       "id": "2",
       "itemId": "2",
       "name": "Lemons",
-      "price": 9.5,
+      "price": 9.49,
       "quantity": 0,
       "image": "/images/Lemons.jpg",
       "description": "-Lisbon Lemons \n -Ripe \n -3 Pack"
@@ -22,16 +22,16 @@
       "id": "3",
       "itemId": "3",
       "name": "Grapes",
-      "price": 7,
+      "price": 6.49,
       "quantity": 0,
       "image": "/images/Grapes.jpg",
-      "description": "-Concord grapes \n -Bag contains 20 grapes"
+      "description": "-Concord Grapes \n -Bag contains 20 grapes"
     },
     {
       "id": "4",
       "itemId": "4",
       "name": "Oranges",
-      "price": 11.9,
+      "price": 11.99,
       "quantity": 0,
       "image": "/images/Oranges.jpg",
       "description": "-Ripe \n -6 pack \n"
@@ -44,6 +44,51 @@
       "quantity": 0,
       "image": "/images/Watermelon.jpg",
       "description": "-20 pounds \n -Contains seeds"
+    },
+    {
+      "id": "6",
+      "itemId": "6",
+      "name": "Basketball",
+      "price": 49.99,
+      "quantity": 0,
+      "image": "/images/Basketball.jpg",
+      "description": "-Indoor/Outdoor Basketball \n -NBA Official Size and Weight"
+    },
+    {
+      "id": "7",
+      "itemId": "7",
+      "name": "Pickleball Set",
+      "price": 39.99,
+      "quantity": 0,
+      "image": "/images/Pickleball.jpg",
+      "description": "-Contains 2 Paddles \n -Contains 2 Outdoor Pickleballs \n -USAPA Approved"
+    },
+    {
+      "id": "8",
+      "itemId": "8",
+      "name": "Keyboard",
+      "price": 27.99,
+      "quantity": 0,
+      "image": "/images/Keyboard.jpg",
+      "description": "-100% Keyboard \n -Black \n -Linear Switches"
+    },
+    {
+      "id": "9",
+      "itemId": "9",
+      "name": "Tv",
+      "price": 89.99,
+      "quantity": 0,
+      "image": "/images/Tv.jpg",
+      "description": "-HD \n -32\" \n -4k Display"
+    },
+    {
+      "id": "10",
+      "itemId": "10",
+      "name": "Storage Bin",
+      "price": 37.99,
+      "quantity": 0,
+      "image": "/images/Storage Bin.jpg",
+      "description": "-4 Count \n -7\"H x 14\"W x 9\"D \n -Assorted Colors"
     }
   ],
   "cart": [],

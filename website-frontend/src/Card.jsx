@@ -1,3 +1,4 @@
+// Initial Imports
 import React from 'react';
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
@@ -6,16 +7,19 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
 function Card( { id, itemId, name, price, quantity, image, description, displayAdd= false, sideDisplay = false, cartPage = false, reload, addItem, deleteItem, findItem}){
+    // Initial Variables
     const API_ITEMS_URL = 'http://localhost:5000/items';
     const API_CART_URL = 'http://localhost:5000/cart';
     const navigate = useNavigate();
 
+    // Set up default propTypes to ensure necessary variables are boolean
     Card.propTypes = {
         displayAdd: PropTypes.bool,
         sideDisplay: PropTypes.bool,
         cartPage: PropTypes.bool
     }
 
+    // Put function that updates the item in items and the cart with the changed quantity and reloads the page
     const updateQuantity = async (itemId, quantity) => {
         await Promise.all([fetch(`${API_ITEMS_URL}/${itemId}`, {
             method: 'PUT',
@@ -30,37 +34,43 @@ function Card( { id, itemId, name, price, quantity, image, description, displayA
         reload()
     }
 
+    // Adds item to cart and updates quantity in items
     const handleAddToCart = async () => {
         if (quantity == 0) {
             await addItem(id, itemId, name, price, 1, image, description);
         }
         updateQuantity(itemId, quantity + 1);
     }
+    // Removes item from cart and updates quantity in items
     const handleRemoveFromCart = async () => {
         updateQuantity(itemId, quantity - 1);
         deleteItem(itemId)
     }
+    // These functions update quantity up or down in items and cart
     const handleAddOne = () => {
         updateQuantity(itemId, quantity + 1);
     }
     const handleRemoveOne = () => {
         updateQuantity(itemId, quantity - 1);
     }
+
+    // Routes to specific product page
     const handleCardPage = () => {
-        navigate(`/item/${id}`);
+        navigate(`/item/${itemId}`);
     }
 
+    // Used for the cart page
     if (cartPage) {
         return(
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-md-2 offset-md-1">
-                        <div className="d-flex justify-content-center align-items-center" style={{height:"200px", paddingTop:"10px"}} >
-                            <img src={image} alt={name} style={{width: "100%", height: "100%", objectFit:"contain"}} />
+                    <div className="col-md-3">
+                        <div className="d-flex justify-content-center align-items-center" style={{height:"200px", paddingTop:"10px", cursor: "pointer"}} >
+                            <img src={image} alt={name} onClick={handleCardPage} style={{width: "100%", height: "100%", objectFit:"contain"}} />
                         </div>
                     </div>
                     <div className="col-md-7">
-                        <h2 style={{paddingTop: "10px", paddingBottom: "90px"}}>{name}</h2>
+                        <h2 onClick={handleCardPage} style={{paddingTop: "10px", paddingBottom: "90px", cursor: "pointer"}}>{name}</h2>
                         {quantity == 1 ? (
                             <div className="btn-group border border-warning align-self-start" role="group" aria-label="Cart Control">
                                 <Button className="btn-card bg-transparent" variant="light" onClick={handleRemoveFromCart}>
@@ -93,9 +103,11 @@ function Card( { id, itemId, name, price, quantity, image, description, displayA
     }
 
     return (
-        <div className={sideDisplay ? "border p-3 h-100 d-flex flex-column align-items-center" : "border p-3 h-100 d-flex flex-column"}>
+        <div className={sideDisplay ? "p-3 h-100 d-flex flex-column justify-content-center align-items-center" : "border p-3 h-100 d-flex flex-column"} style={sideDisplay ? {borderBottom: "2px solid #EAEDED"} : {}}>
             <img src={image} alt={name} onClick={handleCardPage} style={{maxWidth: "100%", maxHeight: "200px", objectFit:"contain", cursor: "pointer"}} />
-            <h1 onClick={handleCardPage} style={{cursor: "pointer"}}>{name}</h1>
+            {sideDisplay ? null :
+                <h1 onClick={handleCardPage} style={{cursor: "pointer"}}>{name}</h1>
+            }
             <h3>${Number(price).toFixed(2)}</h3>
             {quantity != 0 ?
                 (quantity == 1 ? (
