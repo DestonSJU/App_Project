@@ -107,7 +107,7 @@ function App( ) {
                       <Route path="/"
                              element={
                                  <div style={{backgroundColor: "#EAEDED", minHeight: "100vh"}}>
-                                     <h1 style={{marginLeft:"600px", paddingBottom:"100px"}}>Amazon Home Page</h1>
+                                     <h1 style={{marginLeft:"300px", paddingBottom:"100px"}}>Amazon Home Page</h1>
                                      <div className="container" style={{backgroundColor: "white"}}>
                                          <div className="align-self-center">
                                              <h2>Recently Added Items</h2>
@@ -162,7 +162,7 @@ function App( ) {
                              }/>
                       <Route path="/item/:id"
                              element={
-                                 <div className="mx-auto" style={{width: "2800px"}}>
+                                 <div className="mx-auto" style={{width: "2000px"}}>
                                      <CardPage items={items} reload={reloadPage} addItem={addItemToCart} deleteItem={deleteItemFromCart} findItem={findIdInCart} />
                                  </div>}/>
                       <Route path="/about"

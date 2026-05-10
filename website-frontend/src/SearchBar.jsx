@@ -22,7 +22,7 @@ function SearchBar(){
 
     return (
         <div className=" d-flex align-items-center">
-            <input id="search box" value={search} onChange={(e) => setSearch(e.target.value)} className="form-control w-100" style={{maxWidth: "1750px", marginLeft: "180px"}}/>
+            <input id="search box" value={search} onChange={(e) => setSearch(e.target.value)} className="form-control w-100" style={{maxWidth: "1340px", marginLeft: "100px"}}/>
             <Button variant="warning" onClick={handleSearchPage}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                      className="bi bi-search" viewBox="0 0 16 16">
