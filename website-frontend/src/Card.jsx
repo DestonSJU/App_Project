@@ -65,8 +65,8 @@ function Card( { id, itemId, name, price, quantity, image, description, displayA
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-3">
-                        <div className="d-flex justify-content-center align-items-center" style={{height:"200px", paddingTop:"10px", cursor: "pointer"}} >
-                            <img src={image} alt={name} onClick={handleCardPage} style={{width: "100%", height: "100%", objectFit:"contain"}} />
+                        <div className="d-flex justify-content-center align-items-center" style={{height:"200px", width: "100%", paddingTop:"10px", cursor: "pointer"}} >
+                            <img src={image} alt={name} onClick={handleCardPage} style={{maxWidth: "100%", maxHeight: "100%", objectFit:"contain"}} />
                         </div>
                     </div>
                     <div className="col-md-7">
@@ -104,9 +104,13 @@ function Card( { id, itemId, name, price, quantity, image, description, displayA
 
     return (
         <div className={sideDisplay ? "p-3 h-100 d-flex flex-column justify-content-center align-items-center" : "border p-3 h-100 d-flex flex-column"} style={sideDisplay ? {borderBottom: "2px solid #EAEDED"} : {}}>
-            <img src={image} alt={name} onClick={handleCardPage} style={{maxWidth: "100%", maxHeight: "200px", objectFit:"contain", cursor: "pointer"}} />
+            <div className="d-flex justify-content-center align-items-center" style={{height:"200px", width: "100%"}}>
+                <img src={image} alt={name} onClick={handleCardPage} style={{maxWidth: "100%", maxHeight: "100%", objectFit:"contain", cursor: "pointer"}} />
+            </div>
             {sideDisplay ? null :
-                <h1 onClick={handleCardPage} style={{cursor: "pointer"}}>{name}</h1>
+                <div className="d-flex align-items-center" style={{height: "70px"}}>
+                    <h2 onClick={handleCardPage} style={{cursor: "pointer", overflow: "hidden"}}>{name}</h2>
+                </div>
             }
             <h3>${Number(price).toFixed(2)}</h3>
             {quantity != 0 ?

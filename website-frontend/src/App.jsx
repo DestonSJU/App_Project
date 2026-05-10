@@ -82,10 +82,10 @@ function App( ) {
   return (
       <div className="container-fluid">
           <div className="row">
-              <div className={cart.length > 0 && (location.pathname == "/all" || location.pathname.includes("/result") || location.pathname.includes("/item")) ? "col-md-11 p-0" : "col-md-12 p-0"}>
+              <div className={cart.length > 0 && (location.pathname == "/all" || location.pathname.includes("/result") || location.pathname.includes("/item")) ? "col-md-10 p-0" : "col-md-12 p-0"}>
                   <div className="d-flex" style={{backgroundColor: "#232f3e"}}>
                       <h1 className="website-title mb-0" style={{marginLeft: "20px"}}>Amazon</h1>
-                      <div className="flex-grow-1 px-3">
+                      <div className="flex-grow-1 px-3" style={{paddingTop: "10px"}}>
                           <SearchBar/>
                       </div>
                       <Link to="/cart">
@@ -106,8 +106,8 @@ function App( ) {
                   <Routes>
                       <Route path="/"
                              element={
-                                 <div style={{backgroundColor: "#EAEDED", minHeight: "100vh"}}>
-                                     <h1 style={{marginLeft:"300px", paddingBottom:"100px"}}>Amazon Home Page</h1>
+                                 <div style={{backgroundColor: "#EAEDED", minHeight: "150vh"}}>
+                                     <h1 style={{marginLeft:"70px", paddingBottom:"100px"}}>Amazon Home Page</h1>
                                      <div className="container" style={{backgroundColor: "white"}}>
                                          <div className="align-self-center">
                                              <h2>Recently Added Items</h2>
@@ -128,7 +128,7 @@ function App( ) {
                              }/>
                       <Route path="/all"
                              element={
-                                 <div className="row g-2" style={{paddingTop: "30px", marginLeft:"150px", marginRight:"150px"}}>
+                                 <div className="row g-2" style={{paddingTop: "30px", marginLeft:"10px", marginRight:"10px"}}>
                                      {items.map((product) => (
                                          <div className="col-md-3" key={product.id}>
                                              <Card id={product.id} itemId={product.itemId} name={product.name}
@@ -140,7 +140,7 @@ function App( ) {
                              }/>
                       <Route path="/results"
                              element={
-                                 <div className="row g-2" style={{paddingTop: "30px", marginLeft:"150px", marginRight:"150px"}}>
+                                 <div className="row g-2" style={{paddingTop: "30px", marginLeft:"10px", marginRight:"10px"}}>
                                      {searchedItems.length == 0 ? (<h1 style={{paddingTop: "10px"}}>No Items Found! Please Try Again!</h1>) :
                                          searchedItems.map((product) => (
                                              <div className="col-md-3" key={product.id}>
@@ -162,7 +162,7 @@ function App( ) {
                              }/>
                       <Route path="/item/:id"
                              element={
-                                 <div className="mx-auto" style={{width: "2000px"}}>
+                                 <div className="mx-auto" style={{maxWidth: "1000px"}}>
                                      <CardPage items={items} reload={reloadPage} addItem={addItemToCart} deleteItem={deleteItemFromCart} findItem={findIdInCart} />
                                  </div>}/>
                       <Route path="/about"
@@ -190,7 +190,7 @@ function App( ) {
 
               </div>
               {cart.length > 0 && (location.pathname == "/all" || location.pathname.includes("/result") || location.pathname.includes("/item")) ? (
-                  <div className="col-md-1">
+                  <div className="col-md-2">
                       <ShoppingCart cart={cart} setCart={setCart} reload={reloadPage} deleteItem={deleteItemFromCart} findId={findIdInCart} sideDisplay={true} />
                   </div>
               ) : null}

@@ -49,7 +49,7 @@ function ShoppingCart({cart, setCart, reload, sideDisplay, cartPage = false}) {
             <div className="container-fluid">
                 <div className="row" style={{paddingTop: "30px", marginLeft: "30px", borderBottom: "2px solid #EAEDED"}}>
                     <h1 style={{marginLeft: "-10px"}}>Shopping Cart</h1>
-                    <h4 style={{marginLeft: "1040px"}}>Price</h4>
+                    <h4 style={{marginLeft: "900px"}}>Price</h4>
                 </div>
                 <div className="row g-2">
                     {cart.map((product) => (
@@ -62,9 +62,9 @@ function ShoppingCart({cart, setCart, reload, sideDisplay, cartPage = false}) {
                 </div>
                 <div className="col-md-2 "></div>
                 {totalQuantity == 1 ? (
-                    <h2 style={{marginLeft: "812px"}}>Subtotal (1 item): ${subtotal.toFixed(2)}</h2>
+                    <h2 style={{marginLeft: "670px"}}>Subtotal (1 item): ${subtotal.toFixed(2)}</h2>
                 ) : (
-                    <h2 style={{marginLeft: "785px"}}>Subtotal ({totalQuantity} items): ${subtotal.toFixed(2)}</h2>
+                    <h2 style={{marginLeft: "645px"}}>Subtotal ({totalQuantity} items): ${subtotal.toFixed(2)}</h2>
                 )
                 }
             </div>

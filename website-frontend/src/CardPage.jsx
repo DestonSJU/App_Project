@@ -53,13 +53,13 @@ function CardPage({items, reload, addItem, deleteItem, findItem}) {
     return (
         <div className="container-fluid">
             <div className="row">
-                <div className="col-md-4 offset-md-1">
-                    <div className="d-flex justify-content-center align-items-center" style={{height:"800px", paddingTop:"100px"}} >
+                <div className="col-md-5">
+                    <div className="d-flex justify-content-center align-items-center" style={{height:"500px", paddingTop:"0px"}} >
                         <img src={product.image} alt={product.name} style={{width: "100%", height: "100%", objectFit:"contain"}} />
                     </div>
                 </div>
-                <div className="col-md-3">
-                    <div className="row" style={{paddingTop: "200px", borderBottom: "2px solid #EAEDED"}}>
+                <div className="col-md-4 offset-md-1">
+                    <div className="row" style={{paddingTop: "150px", borderBottom: "2px solid #EAEDED"}}>
                         <h1>{product.name}</h1>
                     </div>
                     <div className="row" style={{paddingTop: "50px", borderBottom: "2px solid #EAEDED"}}>
@@ -71,7 +71,7 @@ function CardPage({items, reload, addItem, deleteItem, findItem}) {
                     </div>
                 </div>
                 <div className="col-md-2">
-                    <div className="row" style={{paddingTop: "300px"}}>
+                    <div className="row" style={{paddingTop: "250px"}}>
                         <h1>${Number(product.price).toFixed(2)}</h1>
                     </div>
                     {product.quantity != 0 ?
